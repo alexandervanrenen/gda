@@ -1,14 +1,13 @@
-#ifndef _TIME_HPP
-#define _TIME_HPP
+#ifndef GDA_TIME_HPP
+#define GDA_TIME_HPP
 //-----------------------------------------------------------------------------
 #include <iostream>
 #include <string>
 #include <stdint.h>
+#include <ostream>
 //-----------------------------------------------------------------------------
 // Utilities - time
 // Alexander van Renen 2011
-//-----------------------------------------------------------------------------
-using namespace std;
 //-----------------------------------------------------------------------------
 namespace gda {
 //-----------------------------------------------------------------------------
@@ -32,19 +31,20 @@ class Time {
    const Time diff() const;
    
    /// The time in the object in Datum format
-   const string date(uint32_t type = kNorm) const;
+   const std::string date(uint32_t type = kNorm) const;
    
    /// Sets the time to the current time
    void reset();
    
-   /// To string convertion
-   operator const char*() const;
-   operator const string() const;
-   const string str() const;
+   /// converts the time value to a string
+   const std::string str() const;
    
    /// Stores time value in nano seconds
    uint64_t ct;
 };
+//-----------------------------------------------------------------------------
+/// prints the time to the ostream
+std::ostream& operator << (std::ostream& os, const Time& t);
 //-----------------------------------------------------------------------------
 } // end of namespace gda
 //-----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-#include "helper.h"
+#include "gda_string.hpp"
 //-----------------------------------------------------------------------------
 // Utilities - string processing
 // Alexander van Renen 2011
@@ -7,11 +7,20 @@ using namespace std;
 //-----------------------------------------------------------------------------
 namespace gda {
 //-----------------------------------------------------------------------------
+uint32_t countAppearances(const string& str, char c)
+{
+   uint32_t result = 0;
+   for(unsigned int i=0; i<str.size(); i++)
+      if(str[i] == c)
+         result++;
+   return result;
+}
+//-----------------------------------------------------------------------------
 void filterSpecialChars(string& str)
 {
    string tmp = str;
    str = "";
-   for(unsigned int i=0; i<tmp.size(); i++) {
+   for(unsigned int i=0; i<tmp.size(); i++)
       if(isalpha(tmp[i]) || isalnum(tmp[i]) || tmp[i] == ' ')
          str += tmp[i];
 }

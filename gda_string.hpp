@@ -1,8 +1,9 @@
-#ifndef _HELPER_H
-#define _HELPER_H
+#ifndef GDA_STRING_HPP
+#define GDA_STRING_HPP
 //-----------------------------------------------------------------------------
 #include <string>
 #include <sstream>
+#include <stdint.h>
 #include <vector>
 //-----------------------------------------------------------------------------
 // Utilities - string processing
@@ -12,24 +13,8 @@ using namespace std;
 //-----------------------------------------------------------------------------
 namespace gda {
 //-----------------------------------------------------------------------------
-/// number --> string
-template<class Number>
-string toString(const Number num)
-{
-   ostringstream stream;
-   stream << num;
-   return stream.str();
-}
-//-----------------------------------------------------------------------------
-/// string --> number
-template<class Number>
-Number toNumber(const string& str)
-{
-   Number num;
-   istringstream stream(str);
-   stream >> num;
-   return num;
-}
+/// counts number of appearances of c in string str
+uint32_t countAppearances(const string& str, char c);
 //-----------------------------------------------------------------------------
 /// clears the string, afterwards it will just contain: ([a-z][A-Z][0-9])*
 void filterSpecialChars(string& str);

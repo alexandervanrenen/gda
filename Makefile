@@ -1,15 +1,14 @@
 
-all: test
-
+all: gda_lib
 cf := -Werror -Wall $(opt)
 lf := $(opt)
 
-header := $(wildcard *.h)
-source := $(wildcard *.cpp)
-object := $(addprefix $(object),$(source:.cpp=.o))
+header := gda_time.hpp gda_string.hpp 
+source := $(header:.hpp=.cpp)
+object := $(header:.hpp=.o)
 
-test : $(object) $(header)
-	g++ -o $@ $(lf) $(object)
+gda_lib: $(object)
+	ar q gda.a *.o
 
 %o: %cpp
 	g++ -c -o $@ $< $(cf)
