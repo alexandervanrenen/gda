@@ -3,7 +3,7 @@ all: gda_lib
 cf := -Werror -Wall $(opt)
 lf := $(opt)
 
-header := gda_time.hpp gda_string.hpp 
+header := gda_time.hpp gda_string.hpp gda_math.hpp
 source := $(header:.hpp=.cpp)
 object := $(header:.hpp=.o)
 
@@ -14,4 +14,4 @@ gda_lib: $(object)
 	g++ -c -o $@ $< $(cf)
 
 clean:
-	find . -name '*.o' -delete
+	find . -name '*.o' -delete -o -name 'gda.a' -delete

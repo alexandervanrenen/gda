@@ -9,21 +9,22 @@
 // Utilities - string processing
 // Alexander van Renen 2011
 //-----------------------------------------------------------------------------
-using namespace std;
-//-----------------------------------------------------------------------------
 namespace gda {
 //-----------------------------------------------------------------------------
-/// counts number of appearances of c in string str
-uint32_t countAppearances(const string& str, char c);
+/// counts number of appearances of c in std::string str
+uint32_t countAppearances(const std::string& str, char c);
 //-----------------------------------------------------------------------------
-/// clears the string, afterwards it will just contain: ([a-z][A-Z][0-9])*
-void filterSpecialChars(string& str);
+/// calculates the size of the longest line
+uint32_t sizeOfLongestLine(const std::string& str, char c = '\n');
 //-----------------------------------------------------------------------------
-/// splits the string at the splitter parameter and stores the pices in result
-void split(vector<string>& result, const string& str, char splitter);
+/// clears the std::string, afterwards it will just contain: ([a-z][A-Z][0-9])*
+void filterSpecialChars(std::string& str);
+//-----------------------------------------------------------------------------
+/// splits the std::string at the splitter parameter and stores the pices in result
+void split(std::vector<std::string>& result, const std::string& str, char splitter);
 //-----------------------------------------------------------------------------
 /// the specified character is limited to only one apereance in a row
-void removeAllDouble(string& str, char remove);
+void removeAllDouble(std::string& str, char remove);
 }
 //-----------------------------------------------------------------------------
 #endif

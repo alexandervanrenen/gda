@@ -1,4 +1,5 @@
 #include "gda_string.hpp"
+#include <algorithm>
 //-----------------------------------------------------------------------------
 // Utilities - string processing
 // Alexander van Renen 2011
@@ -14,6 +15,20 @@ uint32_t countAppearances(const string& str, char c)
       if(str[i] == c)
          result++;
    return result;
+}
+//-----------------------------------------------------------------------------
+uint32_t sizeOfLongestLine(const string& str, char c)
+{
+   uint32_t result = 0;
+   uint32_t max = 0;
+   for(unsigned int i=0; i<str.size(); i++)
+      if(str[i] == c) {
+         max = ::max(result, max);
+         result = 0;
+      } else {
+         result++;
+      }
+   return ::max(result, max);
 }
 //-----------------------------------------------------------------------------
 void filterSpecialChars(string& str)
