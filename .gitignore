@@ -1,1 +1,3 @@
 libgda.a
+*.o
+tester
