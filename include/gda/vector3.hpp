@@ -1,11 +1,12 @@
 #ifndef GDA_VECTOR3_HPP
 #define GDA_VECTOR3_HPP
 //---------------------------------------------------------------------------
+#include <cassert>
 #include <iostream>
 #include <math.h>
+#include <sstream>
 #include <stdint.h>
 #include <string>
-#include <sstream>
 //---------------------------------------------------------------------------
 // Utilities - 3d vector
 // Alexander van Renen 2010, 2011
@@ -17,7 +18,7 @@ struct Vector3 {
    
    /// Ctor
    explicit Vector3(const T& x=0, const T& y=0, const T& z=0);
-   explicit Vector3(const Vector3<T>& v);
+   Vector3(const Vector3<T>& v);
    void operator=(const Vector3& v);
 
    /// Data access operators

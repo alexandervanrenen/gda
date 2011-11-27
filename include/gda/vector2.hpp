@@ -1,11 +1,12 @@
 #ifndef GDA_VECTOR2_HPP
 #define GDA_VECTOR2_HPP
 //---------------------------------------------------------------------------
+#include <cassert>
 #include <iostream>
 #include <math.h>
+#include <sstream>
 #include <stdint.h>
 #include <string>
-#include <sstream>
 //---------------------------------------------------------------------------
 // Utilities - 2d vector
 // Alexander van Renen 2010, 2011
@@ -59,15 +60,15 @@ struct Vector2 {
 
    /// Data
    union {
-      struct { T x, y };
-      struct { T s, t };
+      struct { T x, y; };
+      struct { T s, t; };
       T data[2];
    };
 };
 //---------------------------------------------------------------------------
 template <class T>
 Vector2<T>::Vector2(const T& x, const T& y)
-: x(x), y(y), z(z)
+: x(x), y(y)
 {
 }
 //---------------------------------------------------------------------------

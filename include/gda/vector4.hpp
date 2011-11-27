@@ -1,11 +1,12 @@
 #ifndef GDA_VECTOR4_HPP
 #define GDA_VECTOR4_HPP
 //---------------------------------------------------------------------------
+#include <cassert>
 #include <iostream>
 #include <math.h>
+#include <sstream>
 #include <stdint.h>
 #include <string>
-#include <sstream>
 //---------------------------------------------------------------------------
 // Utilities - 4d vector
 // Alexander van Renen 2010, 2011
