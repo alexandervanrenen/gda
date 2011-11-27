@@ -1,14 +1,16 @@
 
 all: gda_lib
-cf := -Werror -Wall $(opt)
-lf := $(opt)
 
-header := gda_time.hpp gda_string.hpp gda_math.hpp gda_server.hpp gda_client.hpp
-source := $(header:.hpp=.cpp)
-object := $(header:.hpp=.o)
+cf := -Werror -Wall -funroll-loops -O2 -Iinclude/gda
+lf := -funroll-loop -O2
+
+source := src/time.cpp src/string.cpp src/math.cpp src/server.cpp src/client.cpp
+object := $(source:.cpp=.o)
 
 gda_lib: $(object)
-	ar q gda.a *.o
+	mv src/*.o .
+	ar -rv libgda.a *.o
+	rm *.o
 
 %o: %cpp
 	g++ -c -o $@ $< $(cf)
