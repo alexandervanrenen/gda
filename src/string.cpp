@@ -1,4 +1,4 @@
-#include "string.hpp"
+#include "gda/string.hpp"
 #include <algorithm>
 //-----------------------------------------------------------------------------
 // Utilities - string processing

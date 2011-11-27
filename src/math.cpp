@@ -1,4 +1,4 @@
-#include "math.hpp"
+#include "gda/math.hpp"
 //-----------------------------------------------------------------------------
 // Utilities - string processing
 // Alexander van Renen 2011
