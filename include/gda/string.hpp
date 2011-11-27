@@ -17,13 +17,20 @@ uint32_t countAppearances(const std::string& str, char c);
 uint32_t sizeOfLongestLine(const std::string& str, char c = '\n');
 
 /// clears the std::string, afterwards it will just contain: ([a-z][A-Z][0-9])*
-void filterSpecialChars(std::string& str);
+std::string filterSpecialChars(const std::string& str);
 
 /// splits the std::string at the splitter parameter and stores the pices in result
 void split(std::vector<std::string>& result, const std::string& str, char splitter);
 
 /// the specified character is limited to only one apereance in a row
-void removeAllDouble(std::string& str, char remove);
+std::string removeAllDouble(const std::string& str, char remove);
+
+/// produces a random string
+std::string randomString(uint32_t len);
+std::string randomAlphaString(uint32_t len);
+std::string randomNumbericString(uint32_t len);
+std::string randomAlphaNumericString(uint32_t len);
+std::string randomString(uint32_t len, const std::string& charsToUse);
 }
 //-----------------------------------------------------------------------------
 #endif

@@ -4,8 +4,8 @@ all: libgda
 gtest_include := ../gtest/include
 gtest_dir := ../gtest
 
-cf := -Werror -Wall -O2 -Iinclude -g0 $(addprefix -I,$(gtest_include)) $(addprefix -I,$(gtest_dir)) $(opt)
-lf := -funroll-loop -O2 -g0 $(addprefix -I,$(gtest_include)) $(addprefix -I,$(gtest_dir)) -pthread $(opt)
+cf := -Werror -Wall -O2 -funroll-all-loops -ffast-math -g0 -Iinclude $(addprefix -I,$(gtest_include)) $(addprefix -I,$(gtest_dir)) $(opt)
+lf := -funroll-loop -O2 -ffast-math -g0 $(addprefix -I,$(gtest_include)) $(addprefix -I,$(gtest_dir)) -pthread $(opt)
 
 source := src/time.cpp src/string.cpp src/math.cpp src/server.cpp src/client.cpp
 object := $(source:.cpp=.o)
@@ -26,4 +26,4 @@ tester: $(test_object)
 
 
 clean:
-	find . -name '*.o' -delete -o -name 'libgda.a' -delete -o -name 'tester'
+	find . -name '*.o' -delete -o -name 'libgda.a' -delete -o -name 'tester' -delete
