@@ -31,6 +31,25 @@ std::string randomAlphaString(uint32_t len);
 std::string randomNumbericString(uint32_t len);
 std::string randomAlphaNumericString(uint32_t len);
 std::string randomString(uint32_t len, const std::string& charsToUse);
+
+/// number --> string
+template<class Number>
+std::string toString(const Number& num)
+{
+   std::ostringstream stream;
+   stream << num;
+   return stream.str();
+}
+
+/// string --> number
+template<class Number>
+Number toNumber(const std::string& str)
+{
+   Number num;
+   std::istringstream stream(str);
+   stream >> num;
+   return num;
+}
 }
 //-----------------------------------------------------------------------------
 #endif
