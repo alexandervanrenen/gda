@@ -15,7 +15,7 @@ libgda: $(object)
 	ar -rv libgda.a *.o
 	rm *.o
 
-test_source := $(source) test/main.cpp test/test_string.cpp
+test_source := $(source) test/main.cpp test/test_string.cpp test/test_fasthash.cpp
 test_object := $(test_source:.cpp=.o)
 
 tester: $(test_object)

@@ -32,22 +32,29 @@ std::string randomNumbericString(uint32_t len);
 std::string randomAlphaNumericString(uint32_t len);
 std::string randomString(uint32_t len, const std::string& charsToUse);
 
+/// the exception which gets thrown when parsing a number fails
+struct NoNumber {};
+
 /// number --> string
 template<class Number>
-std::string to_string(const Number& num)
+std::string to_string(const Number& num, bool useThrowOnError=false)
 {
    std::ostringstream stream;
    stream << num;
+   if(useThrowOnError && !stream.good())
+      throw NoNumber();
    return stream.str();
 }
 
 /// string --> number
 template<class Number>
-Number to_number(const std::string& str)
+Number to_number(const std::string& str, bool useThrowOnError=false)
 {
    Number num;
    std::istringstream stream(str);
    stream >> num;
+   if(useThrowOnError && !stream.good())
+      throw NoNumber();
    return num;
 }
 }
