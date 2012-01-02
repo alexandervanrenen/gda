@@ -23,7 +23,7 @@ public:
    ~Client();
 
    /// Read and write from the underlying socket
-   bool read(std::string& msg, int64_t timeInMs);
+   bool read(std::string& msg, int64_t timeInMs = -1);
    bool write(const std::string& msg);
 
    /// For checking client
