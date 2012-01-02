@@ -75,6 +75,17 @@ string removeAllDouble(const string& str, char remove)
    return result;
 }
 //-----------------------------------------------------------------------------
+string getRemainingContent(istream& in)
+{
+   ostringstream os;
+   while(in.good()) {
+      string buffer;
+      in >> buffer;
+      os << buffer << " ";
+   }
+   return os.str();
+}
+//-----------------------------------------------------------------------------
 string randomString(uint32_t len)
 {
    string charsToUse;

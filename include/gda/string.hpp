@@ -25,6 +25,9 @@ void split(std::vector<std::string>& result, const std::string& str, char splitt
 /// the specified character is limited to only one apereance in a row
 std::string removeAllDouble(const std::string& str, char remove);
 
+/// returns the remaining content of the stream in form of a string
+std::string getRemainingContent(std::istream& in);
+
 /// produces a random string
 std::string randomString(uint32_t len);
 std::string randomAlphaString(uint32_t len);
