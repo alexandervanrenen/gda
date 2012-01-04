@@ -53,7 +53,14 @@ private:
 
    /// Client state
    int32_t state;
-   
+
+   /// Set to enable debug output
+   /// 0 == no debug
+   /// 1 == just msg send and recived
+   /// 2 == 1 and switching to fail states
+   /// 3 == everything
+   const static uint8_t debug = 0;
+
    /// init tcp
    void initIn();
    

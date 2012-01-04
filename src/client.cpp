@@ -34,6 +34,14 @@ Client::~Client()
 //---------------------------------------------------------------------------
 bool Client::read(std::string& msg, int64_t timeInMs)
 {
+   // check state
+   if(!good()) {
+      if(debug >= 3)
+         cout << "client::read::fail: client is in bad state" << endl;
+      return false;
+   }
+
+   // wait if needed
    if(timeInMs >= 0) {
       if(timeInMs/1000 > numeric_limits<int32_t>::max())
          throw "specified time is too large";
@@ -49,30 +57,52 @@ bool Client::read(std::string& msg, int64_t timeInMs)
       FD_SET(clientSocket, &rfds);
       int retval = select(clientSocket+1, &rfds, NULL, NULL, &tv);
 
-      if(retval == -1 || !retval) // => no input
+      if(retval == -1 || !retval) { // => no input
+         if(debug == 3)
+            cout << "client::read::fail: no input" << endl;
          return false;
+      }
    }
 
    //read client
    char buffer[2048];
    bzero(buffer, sizeof(buffer));
    int readSuc = ::read(clientSocket, buffer, sizeof(buffer)-1);
-   if (readSuc <= 0)
+   if(readSuc <= 0) {
+      if(debug >= 2)
+         cout << "client::read::fail: fail on reading" << endl;
       return (state = kReadFail) == kGoodState;
+   }
 
    //save and return
    msg = buffer;
+   if(debug >= 1)
+      cout << "client::read: " << msg << endl;
    return true;
 }
 //---------------------------------------------------------------------------
 bool Client::write(const std::string& msg)
 {
+   //check state
+   if(!good()) {
+      if(debug >= 3)
+         cout << "client::write::fail: client is in bad state" << endl;
+      return false;
+   }
+
    //send
    int writeSuc = ::write(clientSocket, msg.c_str(), msg.size());
-   if(writeSuc <= 0) {
+
+   //update sate
+   if(writeSuc <= 0) { // => fail
+      if(debug >= 2)
+         cout << "client::write::fail: fail on writing" << endl;
       return (state = kWriteFail) == kGoodState;
+   } else { // => success
+      if(debug >= 1)
+         cout << "client::write: " << msg << endl;
+      return true;
    }
-   return true;
 }
 //---------------------------------------------------------------------------
 bool Client::good() const

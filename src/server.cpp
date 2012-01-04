@@ -168,6 +168,14 @@ Connection::Connection()
 //---------------------------------------------------------------------------
 bool Connection::read(std::string& msg, int64_t timeInMs)
 {
+   // check state
+   if(!good()) {
+      if(debug >= 3)
+         cout << "server::read::fail: connection is in bad state" << endl;
+      return false;
+   }
+
+   // wait if needed
    if(timeInMs >= 0) {
       if(timeInMs/1000 > numeric_limits<int32_t>::max())
          throw "specified time is too large";
@@ -183,37 +191,60 @@ bool Connection::read(std::string& msg, int64_t timeInMs)
       FD_SET(socket, &rfds);
       int retval = select(socket+1, &rfds, NULL, NULL, &tv);
 
-      if(retval == -1 || !retval) // => no input
+      if(retval == -1 || !retval) { // => no input
+         if(debug >= 3)
+            cout << "server::read::fail: no input" << endl;
          return false;
+      }
    }
 
    //read client
    char buffer[2048];
    bzero(buffer, sizeof(buffer));
    int readSuc = ::read(socket, buffer, sizeof(buffer)-1);
-   if (readSuc <= 0)
+   if (readSuc <= 0) {
+      if(debug >= 2)
+         cout << "server::read::fail: fail on reading" << endl;
       return (state = -1) == 0;
+   }
 
    //save and return
    msg = buffer;
+   if(debug >= 1)
+      cout << "server::read: " << msg << endl;
    return true;
 }
 //---------------------------------------------------------------------------
 bool Connection::write(const std::string& msg)
 {
-   //send
-   int writeSuc = ::write(socket, msg.c_str(), msg.size());
-   if(writeSuc <= 0) {
+   //check state
+   if(!good()) {
+      if(debug >= 3)
+         cout << "server::write::fail: connection is in bad state" << endl;
       return false;
    }
-   return true;
+
+   //send
+   int writeSuc = ::write(socket, msg.c_str(), msg.size());
+
+   //update sate
+   if(writeSuc <= 0) { // => fail
+      if(debug >= 2)
+         cout << "server::write::fail: fail on writing" << endl;
+      return (state = -1) == 0;
+   } else { // => success
+      if(debug >= 1)
+         cout << "server::write: " << msg << endl;
+      return true;
+   }
 }
 //---------------------------------------------------------------------------
 bool Connection::closeConnection()
 {
    shutdown(socket, 2);
    if(close(socket) != 0)
-      std::cout << "fail on closing connection" << std::endl;
+      if(debug)
+         cout << "fail on closing connection" << endl;
 
    return true;
 }
