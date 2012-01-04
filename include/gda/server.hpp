@@ -19,7 +19,7 @@ public:
    /// Constructor for domain name sockets
    Server(const std::string& path);
    /// Constructor for tcp sockets
-   Server(uint32_t port);
+   Server(uint32_t port, bool useUDP = false);
    /// Destructor
    ~Server();
 
@@ -45,6 +45,9 @@ private:
    /// Tcp server data
    uint32_t serverPort;
    sockaddr_in inServerAddr;
+
+   /// Using udp
+   bool useUDP;
 
    /// Server state
    int32_t state;

@@ -17,10 +17,11 @@ Client::Client(const std::string& path)
    initUn();
 }
 //---------------------------------------------------------------------------
-Client::Client(const string& ip, uint32_t port)
+Client::Client(const string& ip, uint32_t port, bool useUDP)
 : clientSocket(-1)
 , clientPath(ip)
 , clientPort(port)
+, useUDP(useUDP)
 {
    initIn();
 }
@@ -112,7 +113,9 @@ void Client::reconnect()
 void Client::initIn()
 {
    //create socket
-   clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+   if(useUDP)
+      clientSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP); else
+      clientSocket = socket(AF_INET, SOCK_STREAM, 0);
    if(clientSocket<0) {
       state = kCreateSocketFail;
       return;

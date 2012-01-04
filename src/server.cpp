@@ -46,14 +46,17 @@ Server::Server(const string& path)
    state = kGoodState;
 }
 //---------------------------------------------------------------------------
-Server::Server(uint32_t port)
+Server::Server(uint32_t port, bool useUDP)
 : serverSocket(-1)
 , serverPath("not a domain name socket")
 , serverPort(port)
+, useUDP(useUDP)
 {
    //set up server Socket
    bzero((char *) &inServerAddr, sizeof(inServerAddr));
-   serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+   if(useUDP)
+      serverSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP); else
+      serverSocket = socket(AF_INET, SOCK_STREAM, 0);
    if(serverSocket<0) {
       state = kCreateSocketFail;
       return;
@@ -63,7 +66,7 @@ Server::Server(uint32_t port)
    inServerAddr.sin_family = AF_INET;
    inServerAddr.sin_addr.s_addr = INADDR_ANY;
    inServerAddr.sin_port = htons(serverPort);
-   int bindSuc = bind(serverSocket, (sockaddr *) &inServerAddr, sizeof(inServerAddr));
+   int bindSuc= bind(serverSocket, (sockaddr *) &inServerAddr, sizeof(inServerAddr));
    if (bindSuc<0) {
       state = kBindSocketFail;
       return;
