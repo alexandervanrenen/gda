@@ -18,7 +18,7 @@ public:
    /// Constructor for domain name sockets
    Client(const std::string& path);
    /// Constructor for tcp sockets
-   Client(const std::string& ip, uint32_t port, bool useUPD = false);
+   Client(const std::string& ip, uint32_t port);
    /// Destructor
    ~Client();
 
@@ -47,9 +47,6 @@ private:
    /// Tcp client data
    sockaddr_in inClientAddr;
    const uint32_t clientPort;
-
-   /// Using UDP
-   bool useUDP;
 
    /// Client state
    int32_t state;
