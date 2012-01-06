@@ -72,6 +72,7 @@ private:
    static const int32_t kResolveHostNameFail = -4; // => could not find host
    static const int32_t kReadFail = -5; // => read() failed
    static const int32_t kWriteFail = -6; // => write() failed
+   static const int32_t kOptSocketFail = -7; // => failed to set optional flags
 };
 //---------------------------------------------------------------------------
 } //end of namesapce gda

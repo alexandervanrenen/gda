@@ -126,6 +126,9 @@ void Client::getFailMsg(std::string& msg) const {
       case kWriteFail:
          msg = "fail unable to write to socket";
          break;
+      case kOptSocketFail:
+         msg = "fail to set optional flags";
+         break;
       default:
          msg = "fail unknown fail";
          break;
@@ -179,7 +182,7 @@ void Client::initUn()
    }
 
    int on = 1;
-   int optSuc = setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, (char*)&on, sizeof(on));
+   int optSuc = setsockopt(clientSocket, SOL_SOCKET, SO_REUSEADDR, (char*)&on, sizeof(on));
    if (optSuc < 0) {
       state = kOptSocketFail;
       return;
