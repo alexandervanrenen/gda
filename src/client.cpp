@@ -181,6 +181,13 @@ void Client::initUn()
       return;
    }
 
+   int on = 1;
+   int optSuc = setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, (char*)&on, sizeof(on));
+   if (optSuc < 0) {
+      state = kOptSocketFail;
+      return;
+   }
+
    //connect socket
    unClientAddr.sun_family = AF_UNIX;
    strcpy(unClientAddr.sun_path, clientPath.c_str());
