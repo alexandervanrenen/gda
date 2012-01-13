@@ -54,6 +54,9 @@ struct Vector3 {
 
    float length() const;
 
+   /// Equality
+   bool operator== (const Vector3<T>& v) const;
+
    /// Output functions
    std::string toString() const;
    template<class S> friend std::ostream& operator<<(std::ostream& os, const Vector3<S>& v);
@@ -232,6 +235,12 @@ float Vector3<T>::length() const
    for(uint8_t i=0; i<3; i++)
       result += data[i]*data[i];
    return sqrt(result);
+}
+//---------------------------------------------------------------------------
+template <class T>
+bool Vector3<T>::operator== (const Vector3<T>& v) const
+{
+   return x==v.x && y==v.y && z==v.z;
 }
 //---------------------------------------------------------------------------
 template <class T>
