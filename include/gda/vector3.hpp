@@ -1,6 +1,7 @@
 #ifndef GDA_VECTOR3_HPP
 #define GDA_VECTOR3_HPP
 //---------------------------------------------------------------------------
+#include "vector2.hpp"
 #include <cassert>
 #include <iostream>
 #include <math.h>
@@ -17,7 +18,7 @@ template <class T>
 struct Vector3 {
    
    /// Ctor
-   explicit Vector3(const T& x=0, const T& y=0, const T& z=0);
+   Vector3(const T& x=0, const T& y=0, const T& z=0);
    Vector3(const Vector3<T>& v);
    void operator=(const Vector3& v);
 
@@ -56,6 +57,9 @@ struct Vector3 {
 
    /// Equality
    bool operator== (const Vector3<T>& v) const;
+
+   /// Conevert to lower vector
+   operator Vector2<T> () const {return Vector2<T>(x,y);}
 
    /// Output functions
    std::string toString() const;
