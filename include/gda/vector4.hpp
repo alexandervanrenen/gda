@@ -56,6 +56,7 @@ struct Vector4 {
 
    /// Equality
    bool operator== (const Vector4<T>& v) const;
+   bool operator!= (const Vector4<T>& v) const;
 
    /// Output functions
    std::string toString() const;
@@ -240,6 +241,12 @@ template <class T>
 bool Vector4<T>::operator== (const Vector4<T>& v) const
 {
    return x==v.x && y==v.y && z==v.z && data[3]==v.data[3];
+}
+//---------------------------------------------------------------------------
+template <class T>
+bool Vector4<T>::operator!= (const Vector4<T>& v) const
+{
+   return x!=v.x || y!=v.y || z!=v.z || data[3]!=v.data[3];
 }
 //---------------------------------------------------------------------------
 template <class T>

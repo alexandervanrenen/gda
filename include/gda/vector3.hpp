@@ -57,6 +57,7 @@ struct Vector3 {
 
    /// Equality
    bool operator== (const Vector3<T>& v) const;
+   bool operator!= (const Vector3<T>& v) const;
 
    /// Conevert to lower vector
    operator Vector2<T> () const {return Vector2<T>(x,y);}
@@ -245,6 +246,12 @@ template <class T>
 bool Vector3<T>::operator== (const Vector3<T>& v) const
 {
    return x==v.x && y==v.y && z==v.z;
+}
+//---------------------------------------------------------------------------
+template <class T>
+bool Vector3<T>::operator!= (const Vector3<T>& v) const
+{
+   return x!=v.x || y!=v.y || z!=v.z;
 }
 //---------------------------------------------------------------------------
 template <class T>
