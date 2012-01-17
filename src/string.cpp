@@ -120,5 +120,5 @@ string randomString(uint32_t len, const string& charsToUse)
    return os.str();
 }
 //-----------------------------------------------------------------------------
-} // end of namespace convy
+} // end of namespace gda
 //-----------------------------------------------------------------------------

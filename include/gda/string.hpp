@@ -60,6 +60,7 @@ Number to_number(const std::string& str, bool useThrowOnError=false)
       throw NoNumber();
    return num;
 }
-}
+//-----------------------------------------------------------------------------
+} // end of namespace gda
 //-----------------------------------------------------------------------------
 #endif

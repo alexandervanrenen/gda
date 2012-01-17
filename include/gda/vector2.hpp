@@ -15,7 +15,7 @@ namespace gda {
 //---------------------------------------------------------------------------
 template <class T>
 struct Vector2 {
-   
+
    /// Ctor
    Vector2(const T& x=0, const T& y=0);
    Vector2(const Vector2<T>& v);
