@@ -47,6 +47,8 @@ struct Vector2 {
    Vector2<T> operator+(const Vector2<T>& v) const;
    Vector2<T> operator-(const Vector2<T>& v) const;
 
+   void operator+=(const Vector2<T>& v);
+
    Vector2<T> cross(const Vector2<T>& v) const;
 
    T dot(const Vector2<T>& v) const;
@@ -202,6 +204,12 @@ Vector2<T> Vector2<T>::operator-(const Vector2<T>& v) const
    for(uint8_t i=0; i<2; i++)
       result[i] -= v.data[i];
    return result;
+}
+//---------------------------------------------------------------------------
+template <class T>
+void Vector2<T>::operator+=(const Vector2<T>& v)  {
+  x += v.x;
+  y += v.y;
 }
 //---------------------------------------------------------------------------
 template <class T>
