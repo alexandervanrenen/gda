@@ -10,6 +10,8 @@ lf := -funroll-loop -O2 -ffast-math -g0 $(addprefix -I,$(gtest_include)) $(addpr
 source := src/time.cpp src/string.cpp src/math.cpp src/server.cpp src/client.cpp src/color.cpp src/random_generator.cpp src/line.cpp
 object := $(source:.cpp=.o)
 
+comp?= g++
+
 libgda: $(object)
 	mv src/*.o .
 	ar -rv libgda.a *.o
@@ -19,10 +21,10 @@ test_source := $(source) test/main.cpp test/test_string.cpp test/test_fasthash.c
 test_object := $(test_source:.cpp=.o)
 
 tester: $(test_object)
-	g++ -o tester $(test_object) $(addprefix $(gtest_dir),/gtest_lib.o) $(lf)
+	$(comp) -o tester $(test_object) $(addprefix $(gtest_dir),/gtest_lib.o) $(lf)
 
 %o: %cpp
-	g++ -c -o $@ $< $(cf)
+	$(comp) -c -o $@ $< $(cf)
 
 
 clean:
