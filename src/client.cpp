@@ -2,6 +2,7 @@
 #include <limits>
 #include <netdb.h> 
 #include <iostream>
+#include <unistd.h>
 //---------------------------------------------------------------------------
 // Utilities - networking client
 // Alexander van Renen 2011

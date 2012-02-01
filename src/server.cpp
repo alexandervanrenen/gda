@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sys/time.h>
 #include <limits>
+#include <unistd.h>
 //---------------------------------------------------------------------------
 // Utilities - networking server
 // Alexander van Renen 2011
