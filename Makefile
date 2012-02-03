@@ -13,9 +13,8 @@ object := $(source:.cpp=.o)
 comp?= g++
 
 libgda: $(object)
-	mv src/*.o .
-	ar -rv libgda.a *.o
-	rm *.o
+	cp src/*.o .
+	ar -r libgda.a *.o
 
 test_source := $(source) test/main.cpp test/test_string.cpp test/test_fasthash.cpp
 test_object := $(test_source:.cpp=.o)
