@@ -3,6 +3,7 @@
 //---------------------------------------------------------------------------
 #include "gda/vector2.hpp"
 #include <ostream>
+#include <vector>
 //---------------------------------------------------------------------------
 // Utilities - line lib
 // Alexander van Renen 2012
@@ -24,10 +25,23 @@ public:
    /// calculates a point on the line
    const Vector2<float> evaluate(float alpha) const;
 
+   /// print
    friend std::ostream& operator<< (std::ostream& os, const Line& line);
+
+   /// get line with right angle
+   Line rightAngleLine() const;
+
+   /// sort points as if they where on the line
+   void sortAlongLine(std::vector<Vector2<float>>& points) const;
 
    /// set the precision
    static const uint32_t precision = 3; // 3 decimal places are taken into account
+
+   /// setter and getter
+   void setUpPoint(const Vector2<float>& p);
+   const Vector2<float> getUpPoint();
+   void setDirection(const Vector2<float>& p);
+   const Vector2<float> getDirection();
 
 private:
    Vector2<float> a;

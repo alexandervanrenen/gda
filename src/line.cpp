@@ -1,5 +1,6 @@
 #include "gda/line.hpp"
 #include <iostream>
+#include <algorithm>
 //-----------------------------------------------------------------------------
 // Utilities - line lib
 // Alexander van Renen 2012
@@ -83,6 +84,53 @@ ostream& operator<< (ostream& os, const Line& line)
 {
    os << line.a << "  " << line.d << endl;
    return os;
+}
+//-----------------------------------------------------------------------------
+Line Line::rightAngleLine() const
+{
+   return Line(a, Vec2(-d.y,d.x));
+}
+//-----------------------------------------------------------------------------
+void Line::sortAlongLine(vector<Vec2>& points) const
+{
+   // init
+   vector<pair<float, Vec2>> result;
+   Line rectLine = rightAngleLine();
+
+   // calculate a scalar for each point describing its fitness
+   for(auto iter : points) {
+      rectLine.setUpPoint(iter);
+      float alpha, beta;
+      intersect(alpha, beta, rectLine);
+      result.push_back(make_pair(alpha, iter));
+   }
+
+   // sort by fitness
+   sort(result.begin(), result.end(), [](const pair<float, Vec2>& lhs, const pair<float, Vec2>& rhs){return lhs.first<rhs.first;});
+
+   // write data back to points
+   for(uint32_t i=0; i<points.size(); i++)
+      points[i] = result[i].second;
+}
+//-----------------------------------------------------------------------------
+void Line::setUpPoint(const Vec2& p)
+{
+   a = p;
+}
+//-----------------------------------------------------------------------------
+const Vec2 Line::getUpPoint()
+{
+   return a;
+}
+//-----------------------------------------------------------------------------
+void Line::setDirection(const Vec2& p)
+{
+   d = p;
+}
+//-----------------------------------------------------------------------------
+const Vec2 Line::getDirection()
+{
+   return d;
 }
 //-----------------------------------------------------------------------------
 } // end of namespace gda
