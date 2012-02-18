@@ -91,26 +91,34 @@ Line Line::rightAngleLine() const
    return Line(a, Vec2(-d.y,d.x));
 }
 //-----------------------------------------------------------------------------
-void Line::sortAlongLine(vector<Vec2>& points) const
+bool cmp(const pair<float, Vec2>& lhs, const pair<float, Vec2>& rhs)
+{
+   return lhs.first<rhs.first;
+}
+//-----------------------------------------------------------------------------
+vector<uint32_t> Line::sortAlongLine(vector<Vec2>& points) const
 {
    // init
-   vector<pair<float, Vec2>> result;
+   vector<pair<float, uint32_t> > result;
    Line rectLine = rightAngleLine();
 
    // calculate a scalar for each point describing its fitness
-   for(auto iter : points) {
-      rectLine.setUpPoint(iter);
+   for(uint32_t i=0; i<points.size(); i++) {
+      rectLine.setUpPoint(points[i]);
       float alpha, beta;
       intersect(alpha, beta, rectLine);
-      result.push_back(make_pair(alpha, iter));
+      result.push_back(make_pair(alpha, i));
    }
 
    // sort by fitness
-   sort(result.begin(), result.end(), [](const pair<float, Vec2>& lhs, const pair<float, Vec2>& rhs){return lhs.first<rhs.first;});
+   sort(result.begin(), result.end(), cmp);
 
-   // write data back to points
+   // create permutation
+   vector<uint32_t> permutation(points.size());
    for(uint32_t i=0; i<points.size(); i++)
-      points[i] = result[i].second;
+      permutation[i] = result[i].second;
+
+   return permutation;
 }
 //-----------------------------------------------------------------------------
 void Line::setUpPoint(const Vec2& p)

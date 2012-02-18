@@ -32,7 +32,7 @@ public:
    Line rightAngleLine() const;
 
    /// sort points as if they where on the line
-   void sortAlongLine(std::vector<Vector2<float>>& points) const;
+   std::vector<uint32_t> sortAlongLine(std::vector<Vector2<float> >& points) const;
 
    /// set the precision
    static const uint32_t precision = 3; // 3 decimal places are taken into account
