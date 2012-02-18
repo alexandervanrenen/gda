@@ -20,6 +20,7 @@ struct Vector3 {
    /// Ctor
    Vector3(const T& x=0, const T& y=0, const T& z=0);
    Vector3(const Vector3<T>& v);
+   Vector3(const Vector2<T>& v, const T& z=0);
    void operator=(const Vector3& v);
 
    /// Data access operators
@@ -58,6 +59,7 @@ struct Vector3 {
    /// Equality
    bool operator== (const Vector3<T>& v) const;
    bool operator!= (const Vector3<T>& v) const;
+   bool almostEqual(const Vector3<T>& v, float epsilon) const;
 
    /// Conevert to lower vector
    operator Vector2<T> () const {return Vector2<T>(x,y);}
@@ -86,6 +88,14 @@ Vector3<T>::Vector3(const Vector3<T>& v)
 {
    for(uint8_t i=0; i<3; i++)
       data[i] = v.data[i];
+}
+//---------------------------------------------------------------------------
+template <class T>
+Vector3<T>::Vector3(const Vector2<T>& v, const T& z)
+{
+   for(uint8_t i=0; i<2; i++)
+      data[i] = v.data[i];
+   data[2] = z;
 }
 //---------------------------------------------------------------------------
 template <class T>
@@ -252,6 +262,16 @@ template <class T>
 bool Vector3<T>::operator!= (const Vector3<T>& v) const
 {
    return x!=v.x || y!=v.y || z!=v.z;
+}
+//---------------------------------------------------------------------------
+template <class T>
+bool Vector3<T>::almostEqual(const Vector3<T>& v, float epsilon) const
+{
+   Vector3<T> lhs(*this);
+   Vector3<T> rhs(v);
+   Vector3<T> res(lhs.absolute() - rhs.absolute());
+   res.absolute();
+   return res.x<=epsilon && res.y<=epsilon && res.z<=epsilon;
 }
 //---------------------------------------------------------------------------
 template <class T>
