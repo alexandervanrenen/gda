@@ -13,13 +13,18 @@ namespace gda {
 //---------------------------------------------------------------------------
 /// policy class  => use this policy for non thread safe allocators
 struct NoLockPolicy {
-   NoLockPolicy() {}
+   struct Lock {
+      Lock() {};
+      ~Lock() {};
+   };
+protected:
    ~NoLockPolicy() {}
 };
 //---------------------------------------------------------------------------
 /// policy class  => use this policy for thread safe allocators
 struct SimpleLockPolicy {
-   SimpleLockPolicy() {}
+   SimpleLockPolicy() {} // AAA implement
+protected:
    ~SimpleLockPolicy() {}
 };
 //---------------------------------------------------------------------------
@@ -27,12 +32,16 @@ struct SimpleLockPolicy {
 struct UseNewOnInheritencePolicy {
    static void* allocate(std::size_t size) {return ::operator new(size);}
    static void deallocate(void* data, std::size_t /*size*/) {::operator delete(data);}
+protected:
+   ~UseNewOnInheritencePolicy() {}
 };
 //---------------------------------------------------------------------------
 /// policy class => if the allocator is used for a derived class an assert
 struct AssertOnInheritencePolicy {
    static void* allocate(std::size_t /*size*/) {assert(false); return NULL;}
    static void deallocate(void* /*data*/, std::size_t /*size*/) {assert(false);}
+protected:
+   ~AssertOnInheritencePolicy() {}
 };
 //---------------------------------------------------------------------------
 /// policy class  => use normal allocator
@@ -41,14 +50,14 @@ class StdAllocatorPolicy {
 public:
    static void* allocate(std::size_t size) {return ::operator new(size);}
    static void deallocate(void* data, std::size_t size) {::operator delete(data);}
+protected:
+   ~StdAllocatorPolicy() {}
 };
 //---------------------------------------------------------------------------
 /// policy class  => fixed allocator with free list
 template<class T>
 class FreeListPolicy {
 public:
-   virtual ~FreeListPolicy() {}
-   
    static void* allocate(std::size_t /*size*/)
    {
       if(nextFreeElement != NULL) {
@@ -72,6 +81,8 @@ public:
       static_cast<FreeElement*>(data)->next = nextFreeElement;
       nextFreeElement = static_cast<FreeElement*>(data);
    }
+protected:
+   ~FreeListPolicy() {}
 private:
    struct Chunk
    {

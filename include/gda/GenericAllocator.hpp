@@ -13,18 +13,20 @@ namespace gda {
 template<class T, template <class Type> class Allocator = FreeListPolicy, class LockPolicy = NoLockPolicy, class InheritenceSupport = AssertOnInheritencePolicy>
 class GenericAllocator : public Allocator<T>, LockPolicy, InheritenceSupport {
 public:
-   virtual ~GenericAllocator() {}
 
    static void* operator new(std::size_t size) throw(std::bad_alloc);
 
    static void operator delete(void* data, std::size_t size) throw();
+
+protected:
+   ~GenericAllocator() {}
 };
 //---------------------------------------------------------------------------
 /// new operator of host class, combining the policies
 template<class T, template <class> class Allocator, class LockPolicy, class InheritenceSupport>
 void* GenericAllocator<T, Allocator, LockPolicy, InheritenceSupport>::operator new(std::size_t size) throw(std::bad_alloc)
 {
-   LockPolicy guard;
+   typename LockPolicy::Lock guard;
 
    if((sizeof(T)!=size))
       return InheritenceSupport::allocate(size);
@@ -36,7 +38,7 @@ void* GenericAllocator<T, Allocator, LockPolicy, InheritenceSupport>::operator n
 template<class T, template <class Type> class Allocator, class LockPolicy, class InheritenceSupport>
 void GenericAllocator<T, Allocator, LockPolicy, InheritenceSupport>::operator delete(void* data, std::size_t size) throw()
 {
-   LockPolicy guard;
+   typename LockPolicy::Lock guard;
 
    if((sizeof(T)!=size)) {
       InheritenceSupport::deallocate(data, size);
