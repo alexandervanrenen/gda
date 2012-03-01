@@ -10,7 +10,9 @@ lf := -funroll-loop -O2 -ffast-math -g0 $(addprefix -I,$(gtest_include)) $(addpr
 source := src/time.cpp src/string.cpp src/math.cpp src/server.cpp src/client.cpp src/color.cpp src/random_generator.cpp src/line.cpp
 object := $(source:.cpp=.o)
 
-comp?= g++
+ccache_use?=ccache 
+comp?= g++ 
+comp:= $(ccache_use) $(comp)
 
 libgda: $(object)
 	cp src/*.o .
