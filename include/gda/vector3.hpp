@@ -20,7 +20,7 @@ struct Vector3 {
    /// Ctor
    Vector3(const T& x=0, const T& y=0, const T& z=0);
    Vector3(const Vector3<T>& v);
-   Vector3(const Vector2<T>& v, const T& z=0);
+   explicit Vector3(const Vector2<T>& v, const T& z=0);
    void operator=(const Vector3& v);
 
    /// Data access operators
