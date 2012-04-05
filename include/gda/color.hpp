@@ -25,10 +25,10 @@ struct Color {
    void change(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 0xff);
 
    /// properties
-   uint8_t red;
-   uint8_t green;
-   uint8_t blue;
-   uint8_t alpha;
+   union { uint8_t red;   uint8_t r; };
+   union { uint8_t green; uint8_t g; };
+   union { uint8_t blue;  uint8_t b; };
+   union { uint8_t alpha; uint8_t a; };
 
    /// helper function
    static Type stringToType(const std::string& colorName);
