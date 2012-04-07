@@ -64,6 +64,7 @@ struct Vector2 {
    /// Output functions
    std::string toString() const;
    template<class S> friend std::ostream& operator<<(std::ostream& os, const Vector2<S>& v);
+   template<class S> friend std::istream& operator>>(std::istream& is, Vector2<S>& v);
 
    /// Data
    union {
@@ -283,6 +284,18 @@ std::ostream& operator<<(std::ostream& os, const Vector2<S>& v)
 {
    os << v.toString();
    return os;
+}
+//---------------------------------------------------------------------------
+template<class S>
+std::istream& operator>>(std::istream& is, Vector2<S>& v)
+{
+   char buffer;
+   is >> buffer;
+   for(uint8_t i=0; i<2; i++) {
+      is >> v.data[i];
+      is >> buffer;
+   }
+   return is;
 }
 //---------------------------------------------------------------------------
 } // end of namesapce gda
