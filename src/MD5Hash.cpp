@@ -174,5 +174,12 @@ bool MD5Hash::operator!= (const MD5Hash& other) const
    return value32[0]!=other.value32[0] || value32[1]!=other.value32[1] || value32[2]!=other.value32[2] || value32[3]!=other.value32[3];
 }
 //---------------------------------------------------------------------------
+uint64_t MD5Hash::toNumber() const
+{
+   uint64_t result = value32[0] + (static_cast<uint64_t>(value32[2])<<16);
+   result += value32[2] + (static_cast<uint64_t>(value32[3])<<16);
+   return result;
+}
+//---------------------------------------------------------------------------
 } // end of namespace gda
 //---------------------------------------------------------------------------

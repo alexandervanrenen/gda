@@ -21,6 +21,7 @@ public:
    bool operator== (const MD5Hash& other) const;
    bool operator!= (const MD5Hash& other) const;
 
+   uint64_t toNumber() const;
 private:
    union {
       uint8_t value[16];
