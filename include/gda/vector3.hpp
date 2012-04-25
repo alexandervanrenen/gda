@@ -22,6 +22,10 @@ struct Vector3 {
    Vector3(const Vector3<T>& v);
    explicit Vector3(const Vector2<T>& v, const T& z=0);
    void operator=(const Vector3& v);
+   template<class U>
+   Vector3(const Vector3<U>& o);
+   template<class U>
+   void operator=(const Vector3<U>& o);
 
    /// Data access operators
    T& operator[](const uint32_t pos);
@@ -103,6 +107,22 @@ void Vector3<T>::operator=(const Vector3<T>& v)
 {
    for(uint8_t i=0; i<3; i++)
       data[i] = v.data[i];
+}
+//---------------------------------------------------------------------------
+template <class T>
+template <class U>
+Vector3<T>::Vector3(const Vector3<U>& o)
+{
+   for(uint8_t i=0; i<3; i++)
+      data[i] = o.data[i];
+}
+//---------------------------------------------------------------------------
+template <class T>
+template <class U>
+void Vector3<T>::operator=(const Vector3<U>& o)
+{
+   for(uint8_t i=0; i<3; i++)
+      data[i] = o.data[i];
 }
 //---------------------------------------------------------------------------
 template <class T>

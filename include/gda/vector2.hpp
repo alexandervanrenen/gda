@@ -16,10 +16,14 @@ namespace gda {
 template <class T>
 struct Vector2 {
 
-   /// Ctor
+   /// Ctor and assignment
    Vector2(const T& x=0, const T& y=0);
    Vector2(const Vector2<T>& v);
    void operator=(const Vector2& v);
+   template<class U>
+   Vector2(const Vector2<U>& o);
+   template<class U>
+   void operator=(const Vector2<U>& o);
 
    /// Data access operators
    T& operator[](const uint32_t pos);
@@ -92,6 +96,22 @@ void Vector2<T>::operator=(const Vector2<T>& v)
 {
    for(uint8_t i=0; i<2; i++)
       data[i] = v.data[i];
+}
+//---------------------------------------------------------------------------
+template <class T>
+template <class U>
+Vector2<T>::Vector2(const Vector2<U>& o)
+{
+   for(uint8_t i=0; i<2; i++)
+      data[i] = o.data[i];
+}
+//---------------------------------------------------------------------------
+template <class T>
+template <class U>
+void Vector2<T>::operator=(const Vector2<U>& o)
+{
+   for(uint8_t i=0; i<2; i++)
+      data[i] = o.data[i];
 }
 //---------------------------------------------------------------------------
 template <class T>

@@ -20,6 +20,10 @@ struct Vector4 {
    explicit Vector4(const T& x=0, const T& y=0, const T& z=0);
    explicit Vector4(const Vector4<T>& v);
    void operator=(const Vector4& v);
+   template<class U>
+   Vector4(const Vector4<U>& o);
+   template<class U>
+   void operator=(const Vector4<U>& o);
 
    /// Data access operators
    T& operator[](const uint32_t pos);
@@ -88,6 +92,22 @@ void Vector4<T>::operator=(const Vector4<T>& v)
 {
    for(uint8_t i=0; i<4; i++)
       data[i] = v.data[i];
+}
+//---------------------------------------------------------------------------
+template <class T>
+template <class U>
+Vector4<T>::Vector4(const Vector4<U>& o)
+{
+   for(uint8_t i=0; i<4; i++)
+      data[i] = o.data[i];
+}
+//---------------------------------------------------------------------------
+template <class T>
+template <class U>
+void Vector4<T>::operator=(const Vector4<U>& o)
+{
+   for(uint8_t i=0; i<4; i++)
+      data[i] = o.data[i];
 }
 //---------------------------------------------------------------------------
 template <class T>
