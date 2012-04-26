@@ -28,6 +28,9 @@ std::string removeAllDouble(const std::string& str, char remove);
 /// returns the remaining content of the stream in form of a string
 std::string getRemainingContent(std::istream& in);
 
+/// checks if string ends with "ending"
+bool endsWith(const std::string& str, const std::string& ending);
+
 /// produces a random string
 std::string randomString(uint32_t len);
 std::string randomAlphaString(uint32_t len);

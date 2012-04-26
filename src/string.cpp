@@ -86,6 +86,14 @@ string getRemainingContent(istream& in)
    return os.str();
 }
 //-----------------------------------------------------------------------------
+bool endsWith(const std::string& str, const std::string& ending)
+{
+   bool matches = str.size()>=ending.size();
+   for(string::const_reverse_iterator a=str.rbegin(), b=ending.rbegin(); a!=str.rend() && b!=ending.rend() && matches; a++, b++)
+      matches &= *a==*b;
+   return matches;
+}
+//-----------------------------------------------------------------------------
 string randomString(uint32_t len)
 {
    string charsToUse;
