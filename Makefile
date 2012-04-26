@@ -18,7 +18,8 @@ source := src/time.cpp \
          src/MD5Hash.cpp \
          src/vector4.cpp \
          src/vector3.cpp \
-         src/vector2.cpp
+         src/vector2.cpp \
+         src/filesystem.cpp
 
 object := $(source:.cpp=.o)
 
