@@ -65,7 +65,7 @@ void Directory::filterVector(vector<string>& vec, const string& ending)
 {
    // removes all strings from "vec" with "ending" at the end
    for(vector<string>::iterator iter=vec.begin(); iter!=vec.end(); /*inside*/)
-      if(endsWith(*iter, ending))
+      if(!endsWith(*iter, ending))
          iter=vec.erase(iter); else
          iter++;
 }
