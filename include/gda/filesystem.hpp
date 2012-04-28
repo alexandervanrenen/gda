@@ -18,6 +18,7 @@ public:
    void filter(const std::string& ending);
    std::vector<std::string> getFiles(const std::string& ending) const;
    const std::vector<std::string>& getAllFiles() const;
+   void removeEnding(const std::string& ending);
 
    /// access subDirectories
    const std::vector<std::string>& getAllSubDirectories() const;

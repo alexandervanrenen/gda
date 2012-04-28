@@ -6,6 +6,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <stdlib.h>
+#include <cassert>
 //-----------------------------------------------------------------------------
 // Utilities - file system access
 // Alexander van Renen 2012
@@ -43,6 +44,14 @@ vector<string> Directory::getFiles(const string& ending) const
 const vector<string>& Directory::getAllFiles() const
 {
    return files;
+}
+//-----------------------------------------------------------------------------
+void Directory::removeEnding(const string& ending)
+{
+   for(vector<string>::iterator iter=files.begin(); iter!=files.end(); iter++) {
+      assert(iter->size() >= ending.size());
+      *iter = iter->substr(0, iter->size()-ending.size());
+   }
 }
 //-----------------------------------------------------------------------------
 const vector<string>& Directory::getAllSubDirectories() const
