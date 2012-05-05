@@ -91,7 +91,7 @@ ostream& operator<<(ostream& stream, const Color &color)
 //---------------------------------------------------------------------------
 std::istream& operator>>(std::istream& stream, Color &color)
 {
-   int r, g, b; // AAA need a way to detect errors
+   int r, g, b;
    stream >> r >> g >> b;
    color.red = r;
    color.green = g;

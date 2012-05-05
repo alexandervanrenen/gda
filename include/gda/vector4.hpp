@@ -17,7 +17,7 @@ template <class T>
 struct Vector4 {
    
    /// Ctor
-   explicit Vector4(const T& x=0, const T& y=0, const T& z=0);
+   explicit Vector4(const T& x=0, const T& y=0, const T& z=0, const T& w=0);
    explicit Vector4(const Vector4<T>& v);
    void operator=(const Vector4& v);
    template<class U>
@@ -68,15 +68,15 @@ struct Vector4 {
 
    /// Data
    union {
-      struct { T x, y, z; }; //AAA
-      struct { T s, t, r; };
+      struct { T x, y, z, w; };
+      struct { T x1, x2, x3, x4; };
       T data[4];
    };
 };
 //---------------------------------------------------------------------------
 template <class T>
-Vector4<T>::Vector4(const T& x, const T& y, const T& z)
-: x(x), y(y), z(z)
+Vector4<T>::Vector4(const T& x, const T& y, const T& z, const T& w)
+: x(x), y(y), z(z), w(w)
 {
 }
 //---------------------------------------------------------------------------
@@ -224,13 +224,11 @@ Vector4<T> Vector4<T>::operator-(const Vector4<T>& v) const
    return result;
 }
 //---------------------------------------------------------------------------
-template <class T>//AAA
+template <class T>
 Vector4<T> Vector4<T>::cross(const Vector4<T>& v) const
 {
-   return Vector4<T>(
-      this->data[1]*v.data[2] - this->data[2]*v.data[1],
-      this->data[2]*v.data[0] - this->data[0]*v.data[2],
-      this->data[0]*v.data[1] - this->data[1]*v.data[0]);
+   assert(false && "cross product not available on 4d vectors");
+   throw;
 }
 //---------------------------------------------------------------------------
 template <class T>
