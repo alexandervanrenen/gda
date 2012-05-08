@@ -1,6 +1,9 @@
 #include "gda/random_generator.hpp"
+#include <limits>
 //-----------------------------------------------------------------------------
 namespace gda {
+//-----------------------------------------------------------------------------
+using namespace std;
 //-----------------------------------------------------------------------------
 RandomGenerator::RandomGenerator(uint64_t seed)
 : seed(seed)
@@ -12,6 +15,11 @@ uint64_t RandomGenerator::rand()
    seed ^= (seed<<13);
    seed ^= (seed>>7);
    return (seed^=(seed<<17));
+}
+//-----------------------------------------------------------------------------
+float RandomGenerator::randScaleFactor()
+{
+   return static_cast<float>(rand())/numeric_limits<uint64_t>::max();
 }
 //-----------------------------------------------------------------------------
 }

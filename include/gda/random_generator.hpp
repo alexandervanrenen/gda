@@ -12,6 +12,7 @@ class RandomGenerator {
 public:
    RandomGenerator(uint64_t seed = 88172645463325252ull);
    uint64_t rand();
+   float randScaleFactor(); // returns float between 0 and 1
    uint64_t seed;
 };
 //-----------------------------------------------------------------------------
