@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <limits>
 #include <unistd.h>
+#include <arpa/inet.h>
 //---------------------------------------------------------------------------
 // Utilities - networking server
 // Alexander van Renen 2011
@@ -130,7 +131,8 @@ uint32_t Server::getPort() const
    return serverPort;
 }
 //---------------------------------------------------------------------------
-void Server::getFailMsg(std::string& msg) {
+void Server::getFailMsg(std::string& msg) const
+{
    switch(state) {
       case kGoodState:
          msg = "win server is fine";
@@ -157,6 +159,13 @@ void Server::getFailMsg(std::string& msg) {
          msg = "fail unknown fail";
          break;
    }
+}
+//---------------------------------------------------------------------------
+string Server::getFailMsg() const
+{
+   string result;
+   getFailMsg(result);
+   return result;
 }
 //---------------------------------------------------------------------------
 Connection::Connection()
@@ -250,5 +259,17 @@ bool Connection::closeConnection()
 bool Connection::good()
 {
    return state==0;
+}
+//---------------------------------------------------------------------------
+uint32_t Connection::getPort() const
+{
+   return socket;
+}
+//---------------------------------------------------------------------------
+const string Connection::getIp() const
+{
+   string result(addrlen, ' ');
+   inet_ntop(AF_INET, &addr.sin_addr, &result[0], addrlen); // AAA INET vs UNIX
+   return result;
 }
 //---------------------------------------------------------------------------

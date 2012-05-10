@@ -32,7 +32,8 @@ public:
    uint32_t getPort() const;
 
    /// Get a nice text message about the server state
-   void getFailMsg(std::string& msg);
+   void getFailMsg(std::string& msg) const;
+   std::string getFailMsg() const;
 
 private:
    /// Common Server data
@@ -66,7 +67,7 @@ public:
    Connection();
 
    /// Read and write from the underlying socket
-   bool read(std::string& msg, int64_t timeInMs = -1);
+   bool read(std::string& msg, int64_t timeInMs = -1); // true if stuff was read
    bool write(const std::string& msg);
 
    /// Close the connection
@@ -75,10 +76,14 @@ public:
    /// Information about the Connection status
    bool good();
 
+   /// getter
+   uint32_t getPort() const;
+   const std::string getIp() const;
+
 private:
    /// Data fields representing the internal state
    int32_t socket;
-   sockaddr_un addr;
+   sockaddr_in addr;
    socklen_t addrlen;
    int32_t state;
 

@@ -136,6 +136,13 @@ void Client::getFailMsg(std::string& msg) const {
    }
 }
 //---------------------------------------------------------------------------
+const string Client::getFailMsg() const
+{
+   string result;
+   getFailMsg(result);
+   return result;
+}
+//---------------------------------------------------------------------------
 void Client::reconnect()
 {
    if(clientPort == 0)

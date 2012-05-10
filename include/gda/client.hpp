@@ -32,6 +32,7 @@ public:
 
    /// Get a nice text message about the client state
    void getFailMsg(std::string& msg) const;
+   const std::string getFailMsg() const;
    
    /// To repair the connection
    void reconnect();
