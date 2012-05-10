@@ -19,7 +19,8 @@ source := src/time.cpp \
          src/vector4.cpp \
          src/vector3.cpp \
          src/vector2.cpp \
-         src/filesystem.cpp
+         src/filesystem.cpp \
+         src/utility.cpp
 
 object := $(source:.cpp=.o)
 
