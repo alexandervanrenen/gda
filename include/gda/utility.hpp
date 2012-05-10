@@ -19,6 +19,8 @@ std::unique_ptr<T> make_unique(Arg&& ...args)
 
 /// check if there is new input on the file descriptor
 bool hasNewEvents(uint32_t fileDescriptor);
+/// trys to figure out currenty memory
+uint64_t getMemorySizeInBytes();
 //-----------------------------------------------------------------------------
 } // end of namespace gda
 //-----------------------------------------------------------------------------

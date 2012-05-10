@@ -1,9 +1,12 @@
 #include "gda/utility.hpp"
 #include <unistd.h>
 #include <cstdlib>
+#include <fstream>
 //-----------------------------------------------------------------------------
 // Utilities - general helper funtions
 // Alexander van Renen 2012
+//-----------------------------------------------------------------------------
+using namespace std;
 //-----------------------------------------------------------------------------
 namespace gda {
 //-----------------------------------------------------------------------------
@@ -21,6 +24,16 @@ bool hasNewEvents(uint32_t fileDescriptor)
    int retval = select(fileDescriptor+1, &rfds, NULL, NULL, &tv);
 
    return !(retval == -1 || !retval);
+}
+//-----------------------------------------------------------------------------
+uint64_t getMemorySizeInBytes()
+{
+   // first line should look like this: MemTotal:       1056859000 kB
+   ifstream in("/proc/meminfo", ios::in);
+   string ignore;
+   uint64_t maxMemory;
+   in >> ignore >> maxMemory;
+   return maxMemory;
 }
 //-----------------------------------------------------------------------------
 } // end of namespace gda
