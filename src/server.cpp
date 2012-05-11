@@ -270,6 +270,6 @@ const string Connection::getIp() const
 {
    string result(addrlen, ' ');
    inet_ntop(AF_INET, &addr.sin_addr, &result[0], addrlen); // AAA INET vs UNIX
-   return result;
+   return string(result.c_str()); // need to filter \0 .. stupid c ..
 }
 //---------------------------------------------------------------------------
