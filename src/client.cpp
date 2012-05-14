@@ -110,6 +110,21 @@ bool Client::good() const
    return state == kGoodState;
 }
 //---------------------------------------------------------------------------
+const string& Client::getPath() const
+{
+   return clientPath;
+}
+//---------------------------------------------------------------------------
+uint32_t Client::getPort() const
+{
+   return clientPort;
+}
+//---------------------------------------------------------------------------
+const string& Client::getIp() const
+{
+   return clientPath;
+}
+//---------------------------------------------------------------------------
 void Client::getFailMsg(std::string& msg) const {
    switch(state) {
       case kGoodState:

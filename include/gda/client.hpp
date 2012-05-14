@@ -29,6 +29,8 @@ public:
    /// For checking client
    bool good() const;
    const std::string& getPath() const;
+   uint32_t getPort() const;
+   const std::string& getIp() const;
 
    /// Get a nice text message about the client state
    void getFailMsg(std::string& msg) const;
