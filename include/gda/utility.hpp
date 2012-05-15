@@ -44,22 +44,22 @@ auto tail(const std::tuple<T...>& t) -> decltype(getTypeOfHead(t))
 //-----------------------------------------------------------------------------
 /// helper functions to read a tuple from std::istream
 template<uint32_t pos, typename... T>
-   typename std::enable_if<pos>=sizeof...(T), void>::type readTuple(std::istream&, std::tuple<T...>&) {}
+   typename std::enable_if<pos>=sizeof...(T)>::type readTuple(std::istream&, std::tuple<T...>&) {}
 template<uint32_t pos, typename... T>
-   typename std::enable_if<pos<sizeof...(T), void>::type readTuple(std::istream& is, std::tuple<T...>& t) { is >> std::get<pos>(t); readTuple<pos+1>(is, t);}
+   typename std::enable_if<pos<sizeof...(T)>::type readTuple(std::istream& is, std::tuple<T...>& t) { is >> std::get<pos>(t); readTuple<pos+1>(is, t);}
 template<typename... T>
    void readTuple(std::istream& is, std::tuple<T...>& t) { readTuple<0, T...>(is, t);}
 //-----------------------------------------------------------------------------
 /// helper functions to write a tuple to std::ostream
 template<uint32_t pos, typename... T>
-   typename std::enable_if<pos>=sizeof...(T), void>::type writeTuple(std::ostream&, const std::tuple<T...>&) {}
+   typename std::enable_if<pos>=sizeof...(T)>::type writeTuple(std::ostream&, const std::tuple<T...>&) {}
 template<uint32_t pos, typename... T>
-   typename std::enable_if<pos<sizeof...(T), void>::type writeTuple(std::ostream& os, const std::tuple<T...>& t) { os << std::get<pos>(t) << " "; writeTuple<pos+1, T...>(os, t);}
+   typename std::enable_if<pos<sizeof...(T)>::type writeTuple(std::ostream& os, const std::tuple<T...>& t) { os << std::get<pos>(t) << " "; writeTuple<pos+1, T...>(os, t);}
 template<typename... T>
    void writeTuple(std::ostream& os, const std::tuple<T...>& t) { writeTuple<0, T...>(os, t);}
 //-----------------------------------------------------------------------------
-#endif
-
+#endif // end of c++11 stuff
+//-----------------------------------------------------------------------------
 /// check if there is new input on the file descriptor
 bool hasNewEvents(uint32_t fileDescriptor);
 /// trys to figure out currenty memory
