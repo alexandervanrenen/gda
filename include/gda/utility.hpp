@@ -2,6 +2,7 @@
 #define GDA_UTILITY_HPP
 //-----------------------------------------------------------------------------
 #include <memory>
+#include <vector>
 #include <stdint.h>
 //-----------------------------------------------------------------------------
 // Utilities - general helper funtions
@@ -61,7 +62,8 @@ template<typename... T>
 #endif // end of c++11 stuff
 //-----------------------------------------------------------------------------
 /// check if there is new input on the file descriptor
-bool hasNewEvents(uint32_t fileDescriptor);
+bool hasNewEvents(uint32_t fileDescriptor, int64_t waitTime = 0);
+bool hasNewEvents(std::vector<uint32_t> fileDescriptors, int64_t waitTime = 0);
 /// trys to figure out currenty memory
 uint64_t getMemorySizeInBytes();
 //-----------------------------------------------------------------------------
