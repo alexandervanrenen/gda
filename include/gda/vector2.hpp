@@ -232,6 +232,7 @@ template <class T>
 const Vector2<T>& Vector2<T>::operator+=(const Vector2<T>& v)  {
   x += v.x;
   y += v.y;
+  return *this;
 }
 //---------------------------------------------------------------------------
 template <class T>
