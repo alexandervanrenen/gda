@@ -1,6 +1,7 @@
 #include "gda/color.hpp"
 #include <iostream>
 #include <cassert>
+#include <sstream>
 //---------------------------------------------------------------------------
 //
 //
@@ -68,6 +69,13 @@ int Color::hexDigitToInt(uint8_t a)
       return 10+a-'A';
    else
       return a-'0';
+}
+//---------------------------------------------------------------------------
+const string Color::str() const
+{
+   ostringstream os;
+   os << *this;
+   return os.str();
 }
 //---------------------------------------------------------------------------
 Color::Type Color::stringToType(const string& colorName)

@@ -33,6 +33,9 @@ struct Color {
    /// helper function
    static Type stringToType(const std::string& colorName);
 
+   /// to string
+   const std::string str() const;
+
    /// print and read function
    friend std::ostream& operator<<(std::ostream& stream, const Color &color);
    friend std::istream& operator>>(std::istream& stream, Color &color);
