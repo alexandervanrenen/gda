@@ -67,7 +67,7 @@ const string Time::date(uint32_t type) const
          
          outStream << t->tm_year+1900 << "-"
                    << (t->tm_mon<10?"0":"")  << t->tm_mon  << "-"
-                   << (t->tm_mday<10?"0":"") << t->tm_mday << " "
+                   << (t->tm_mday<10?"0":"") << t->tm_mday << "_"
                    << (t->tm_hour<10?"0":"") << t->tm_hour << ":"
                    << (t->tm_min<10?"0":"")  << t->tm_min  << ":"
                    << (t->tm_sec<10?"0":"")  << t->tm_sec;

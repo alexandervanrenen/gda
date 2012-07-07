@@ -154,7 +154,7 @@ void MD5Hash::hash(const string& str)
 //---------------------------------------------------------------------------
 ostream& operator<< (ostream& os, const MD5Hash& data)
 {
-   os << data.value32[0] << data.value32[1] << data.value32[2] << data.value32[3];
+   os << data.value32[0] << " " << data.value32[1] << " " << data.value32[2] << " " << data.value32[3];
    return os;
 }
 //---------------------------------------------------------------------------
