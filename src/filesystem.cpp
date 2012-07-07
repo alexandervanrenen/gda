@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <stdlib.h>
 #include <cassert>
+#include <algorithm>
 //-----------------------------------------------------------------------------
 // Utilities - file system access
 // Alexander van Renen 2012
@@ -32,6 +33,12 @@ Directory::Directory(const string& path)
 void Directory::filter(const string& ending)
 {
    filterVector(files, ending);
+}
+//-----------------------------------------------------------------------------
+void Directory::sort()
+{
+   ::sort(files.begin(), files.end());
+   ::sort(subDirectories.begin(), subDirectories.end());
 }
 //-----------------------------------------------------------------------------
 vector<string> Directory::getFiles(const string& ending) const
@@ -61,8 +68,14 @@ const vector<string>& Directory::getAllSubDirectories() const
 //-----------------------------------------------------------------------------
 const string& Directory::getParent() const
 {
+   throw;
    string* a = new string("asd");
    return *a;
+}
+//-----------------------------------------------------------------------------
+bool Directory::isSpecial(const std::string& str) const
+{
+   return str==".." || str==".";
 }
 //-----------------------------------------------------------------------------
 bool Directory::good() const

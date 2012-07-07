@@ -19,12 +19,16 @@ public:
    std::vector<std::string> getFiles(const std::string& ending) const;
    const std::vector<std::string>& getAllFiles() const;
    void removeEnding(const std::string& ending);
+   void sort();
 
    /// access subDirectories
    const std::vector<std::string>& getAllSubDirectories() const;
 
    /// acces parent
    const std::string& getParent() const;
+
+   /// check if this is a special file or directory under current os
+   bool isSpecial(const std::string& str) const;
 
    /// check state
    bool good() const;
@@ -40,3 +44,4 @@ private:
 } // end of namespace gda
 //-----------------------------------------------------------------------------
 #endif
+
