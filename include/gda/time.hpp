@@ -26,19 +26,20 @@ class Time {
    Time(const Time& t);
    const Time& operator= (uint64_t time);
    const Time& operator= (const Time& t);
-   
+
    /// Get difference between the time in the object and now in nano secs
    const Time diff() const;
-   
-   /// The time in the object in Datum format
-   const std::string date(uint32_t type = kNorm) const;
-   
    /// Sets the time to the current time
    void reset();
-   
+   /// Sets the time to the difference between the time in the object and now in nano secs
+   void setDiff();
+
+   /// The time in the object in Datum format
+   const std::string date(uint32_t type = kNorm) const;
+
    /// converts the time value to a string
    const std::string str() const;
-   
+
    /// Stores time value in nano seconds
    uint64_t ct;
 };

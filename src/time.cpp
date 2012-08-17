@@ -55,6 +55,12 @@ void Time::reset()
    ct = curTime.tv_sec * 1000000ull + curTime.tv_usec;
 }
 //-----------------------------------------------------------------------------
+void Time::setDiff()
+{
+   Time a;
+   ct = a.ct - ct;
+}
+//-----------------------------------------------------------------------------
 const string Time::date(uint32_t type) const
 {
    switch (type) {
@@ -65,8 +71,8 @@ const string Time::date(uint32_t type) const
          
          ostringstream outStream;
          
-         outStream << t->tm_year+1900 << "-"
-                   << (t->tm_mon<10?"0":"")  << t->tm_mon  << "-"
+         outStream <<  t->tm_year+1900 << "-"
+                   << (t->tm_mon+1<10?"0":"")  << t->tm_mon+1  << "-"
                    << (t->tm_mday<10?"0":"") << t->tm_mday << "_"
                    << (t->tm_hour<10?"0":"") << t->tm_hour << ":"
                    << (t->tm_min<10?"0":"")  << t->tm_min  << ":"
