@@ -74,7 +74,7 @@ public:
    bool closeConnection();
 
    /// Information about the Connection status
-   bool good();
+   bool good() const;
 
    /// getter
    uint32_t getPort() const;

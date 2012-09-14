@@ -256,7 +256,7 @@ bool Connection::closeConnection()
    return true;
 }
 //---------------------------------------------------------------------------
-bool Connection::good()
+bool Connection::good() const
 {
    return state==0;
 }
