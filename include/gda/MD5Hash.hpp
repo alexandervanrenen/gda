@@ -21,6 +21,8 @@ public:
    bool operator== (const MD5Hash& other) const;
    bool operator!= (const MD5Hash& other) const;
 
+   static MD5Hash getHashOfFile(std::istream& is);
+
    uint64_t toNumber() const;
 private:
    union {

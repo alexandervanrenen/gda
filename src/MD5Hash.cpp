@@ -4,6 +4,8 @@
 #include <string>
 #include <cstring>
 #include <iostream>
+#include <cassert>
+#include <vector>
 //-----------------------------------------------------------------------------
 // Utilities - hashing
 // Stefan Marcik 2012
@@ -172,6 +174,18 @@ bool MD5Hash::operator== (const MD5Hash& other) const
 bool MD5Hash::operator!= (const MD5Hash& other) const
 {
    return value32[0]!=other.value32[0] || value32[1]!=other.value32[1] || value32[2]!=other.value32[2] || value32[3]!=other.value32[3];
+}
+//---------------------------------------------------------------------------
+MD5Hash MD5Hash::getHashOfFile(std::istream& is)
+{
+   assert(is.tellg()==static_cast<size_t>(0));
+   is.seekg(0, ios::end);
+   size_t length = is.tellg();
+   is.seekg(0, ios::beg);
+   vector<char> data(length);
+   is.read(data.data(), length);
+   is.seekg(0, ios::beg);
+   return MD5Hash(data.data());
 }
 //---------------------------------------------------------------------------
 uint64_t MD5Hash::toNumber() const
