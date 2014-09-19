@@ -1,3 +1,9 @@
 libgda.a
 *.o
 tester
+.DS_Store
+.idea
+Utility.xcodeproj
+bin
+gtest
+

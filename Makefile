@@ -1,46 +1,62 @@
-
+## -------------------------------------------------------------------------------------------------
+##
+## This file is part of the gda cpp utility library.
+## Copyright (c) 2012 Alexander van Renen. All rights reserved.
+##
+## Purpose - Used to build the project.
+## -------------------------------------------------------------------------------------------------
+## Define constants
 all: libgda
 
-gtest_include := ../gtest/include
-gtest_dir := ../gtest
+GTEST_INCLUDE := gtest/include
+GTEST_LIB := gtest/libgtest.a
+TARGET_DIR := bin
 
-cf := -Werror -Wall -O2 -funroll-all-loops -ffast-math -g0 -Iinclude $(addprefix -I,$(gtest_include)) $(addprefix -I,$(gtest_dir)) $(opt)
-lf := -funroll-loop -O2 -ffast-math -g0 $(addprefix -I,$(gtest_include)) $(addprefix -I,$(gtest_dir)) -pthread $(opt)
+CF := -g0 -O2 -std=c++11 -Werror -Wextra -Wall -funroll-all-loops -ffast-math -Iinclude $(addprefix -I,$(GTEST_INCLUDE))
+LF := -g0 -O2 -Werror -Wextra -Wall -funroll-all-loops -ffast-math
 
-source := src/time.cpp \
-         src/string.cpp \
-         src/math.cpp \
-         src/server.cpp \
-         src/client.cpp \
-         src/color.cpp \
-         src/random_generator.cpp \
-         src/line.cpp \
-         src/MD5Hash.cpp \
-         src/vector4.cpp \
-         src/vector3.cpp \
-         src/vector2.cpp \
-         src/filesystem.cpp \
-         src/utility.cpp
+CCCACHE_USE?=
+CXX?= g++
+CXX:= $(CCCACHE_USE) $(CXX)
 
-object := $(source:.cpp=.o)
+BUILD_DIR = @mkdir -p $(dir $@)
 
-ccache_use?=
-comp?= g++ 
-comp:= $(ccache_use) $(comp)
-
-libgda: $(object)
-	cp src/*.o .
-	ar -r libgda.a *.o
-
-test_source := $(source) test/main.cpp test/test_string.cpp test/test_fasthash.cpp
-test_object := $(test_source:.cpp=.o)
-
-tester: $(test_object)
-	$(comp) -o tester $(test_object) $(addprefix $(gtest_dir),/gtest_lib.o) $(lf)
-
-%o: %cpp
-	$(comp) -c -o $@ $< $(cf)
-
-
+## -------------------------------------------------------------------------------------------------
+## Track dependencies
+-include $(TARGET_DIR)/*.P
+-include $(TARGET_DIR)/*/*.P
+-include $(TARGET_DIR)/*/*/*.P
+-include $(TARGET_DIR)/*/*/*/*.P
+## -------------------------------------------------------------------------------------------------
+## Grab all files relevant for the build
+src_obj  := $(patsubst src/%,$(TARGET_DIR)/src/%, $(patsubst %.cpp,%.o,$(shell find src -name "*.cpp")))
+test_obj := $(patsubst test/%,$(TARGET_DIR)/test/%, $(patsubst %.cpp,%.o,$(shell find test -name "*.cpp")))
+## -------------------------------------------------------------------------------------------------
+## Build the library itself
+libgda: $(src_obj)
+	@rm -rf libgda.a
+	@for f in `find bin -name *.o`; do \
+	   if [ `nm $$f 2> /dev/null | wc -l` != 0 ]; then \
+	      ar -r libgda.a $$f; \
+	   fi \
+	 done
+## -------------------------------------------------------------------------------------------------
+## Build tests for the library
+tester: libgda $(test_obj)
+	$(CXX) -o tester libgda.a $(test_obj) $(GTEST_LIB) $(LF)
+## -------------------------------------------------------------------------------------------------
+## Build individual files and track dependencies
+$(TARGET_DIR)/%.o: %.cpp
+	$(BUILD_DIR)
+	@if [ $(VERBOSE) ]; then echo $(CXX) -MD -c -o $@ $< $(CF); else echo $(CXX) $@; fi
+	@$(CXX) -MD -c -o $@ $< $(CF)
+	@cp $(TARGET_DIR)/$*.d $(TARGET_DIR)/$*.P; \
+		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+			-e '/^$$/ d' -e 's/$$/ :/' < $(TARGET_DIR)/$*.d >> $(TARGET_DIR)/$*.P; \
+		rm -f $(objDir)$*.d
+## -------------------------------------------------------------------------------------------------
+## Clean up the hole mess
 clean:
+	rm -rf $(TARGET_DIR)
 	find . -name '*.o' -delete -o -name 'libgda.a' -delete -o -name 'tester' -delete
+## -------------------------------------------------------------------------------------------------
