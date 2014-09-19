@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 #include <stdint.h>
+#include <chrono>
 // -------------------------------------------------------------------------------------------------
 namespace gda {
 // -------------------------------------------------------------------------------------------------
@@ -23,6 +24,9 @@ std::vector<std::string> split(const std::string &str, char delimiter);
 // -------------------------------------------------------------------------------------------------
 /// Tries to figure out available memory
 uint64_t getMemorySizeInBytes();
+// -------------------------------------------------------------------------------------------------
+/// Converts the given time in ns into a usable unit depending on its size
+std::string formatTime(std::chrono::nanoseconds ns, uint32_t precision);
 // -------------------------------------------------------------------------------------------------
 } // End of namespace gda
 // -------------------------------------------------------------------------------------------------
