@@ -17,6 +17,7 @@ TEST(MemoryRef, basics)
    vector<char> data{'a', 'b', 'c', 'd', 'e'};
    MemoryRef ref(data.data(), 4);
    ASSERT_EQ(ref.to_string(), "abcd");
+   ASSERT_EQ(ref.to_hex(), "61626364");
    ASSERT_EQ(ref.subRef(0).to_string(), "abcd");
    ASSERT_EQ(ref.subRef(2).to_string(), "cd");
    ASSERT_EQ(ref[2], 'c');

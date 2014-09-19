@@ -37,6 +37,7 @@ public:
 
    /// Create a string (copy memory)
    const std::string to_string() const { return std::string(ptr, len); }
+   const std::string to_hex() const;
 
 	/// Index operator
    char operator[](uint32_t index) const { return ptr[index]; }
