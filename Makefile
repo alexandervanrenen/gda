@@ -8,8 +8,8 @@
 ## Define constants
 all: libgda
 
-GTEST_INCLUDE := gtest/include
-GTEST_LIB := gtest/libgtest.a
+GTEST_INCLUDE := libs/gtest/include
+GTEST_LIB := libs/gtest/libgtest.a
 TARGET_DIR := bin
 
 CF := -g0 -O2 -std=c++11 -Werror -Wextra -Wall -funroll-all-loops -ffast-math -Iinclude $(addprefix -I,$(GTEST_INCLUDE))
@@ -35,15 +35,15 @@ test_obj := $(patsubst test/%,$(TARGET_DIR)/test/%, $(patsubst %.cpp,%.o,$(shell
 ## Build the library itself
 libgda: $(src_obj)
 	@rm -rf libgda.a
-	@for f in `find bin -name *.o`; do \
+	@for f in `find bin/src -name *.o`; do \
 	   if [ `nm $$f 2> /dev/null | wc -l` != 0 ]; then \
 	      ar -r libgda.a $$f; \
 	   fi \
 	 done
 ## -------------------------------------------------------------------------------------------------
 ## Build tests for the library
-tester: libgda $(test_obj)
-	$(CXX) -o tester libgda.a $(test_obj) $(GTEST_LIB) $(LF)
+tester: libgda libs/gtest $(test_obj)
+	$(CXX) -o tester $(test_obj) $(GTEST_LIB) $(LF) libgda.a -lpthread
 ## -------------------------------------------------------------------------------------------------
 ## Build individual files and track dependencies
 $(TARGET_DIR)/%.o: %.cpp
@@ -54,6 +54,24 @@ $(TARGET_DIR)/%.o: %.cpp
 		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 			-e '/^$$/ d' -e 's/$$/ :/' < $(TARGET_DIR)/$*.d >> $(TARGET_DIR)/$*.P; \
 		rm -f $(objDir)$*.d
+## -------------------------------------------------------------------------------------------------
+## Build gtest library
+libs/gtest:
+	$(BUILD_DIR)
+	cd libs/ ;\
+	wget -O gtest-1.7.0.zip https://googletest.googlecode.com/files/gtest-1.7.0.zip ;\
+	unzip -q gtest-1.7.0.zip ;\
+	cd gtest-1.7.0 ;\
+	mkdir -p build ;\
+	cd build ;\
+	cmake -G"Unix Makefiles" .. ;\
+	make ;\
+	ar -r libgtest.a libgtest_main.a
+	mkdir -p libs/gtest/include/gtest
+	mv libs/gtest-1.7.0/include/gtest/* libs/gtest/include/gtest
+	mv libs/gtest-1.7.0/build/libgtest.a libs/gtest/
+	rm libs/gtest-1.7.0.zip
+	rm -rf libs/gtest-1.7.0
 ## -------------------------------------------------------------------------------------------------
 ## Clean up the hole mess
 clean:

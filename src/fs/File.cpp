@@ -17,6 +17,7 @@
 #include <fcntl.h>
 #include <cstdlib>
 #include <string>
+#include <limits>
 // -------------------------------------------------------------------------------------------------
 using namespace std;
 // -------------------------------------------------------------------------------------------------
@@ -75,7 +76,7 @@ uint32_t File::getFileLength() const throw(InvalidFileSystemRequest)
    struct stat st;
    fstat(fileFD, &st);
    close(fileFD);
-   if (st.st_size > numeric_limits<uint32_t>::max())
+   if (st.st_size > numeric_limits<int32_t>::max())
       throw InvalidFileSystemRequest("File too big for library '" + path + "'");
    return static_cast<uint32_t>(st.st_size);
 }

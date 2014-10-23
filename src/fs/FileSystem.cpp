@@ -4,8 +4,9 @@
 //
 // Purpose - Helper functions for a file system.
 // -------------------------------------------------------------------------------------------------
-#include <unistd.h>
 #include "gda/fs/FileSystem.hpp"
+#include <unistd.h>
+#include <algorithm>
 // -------------------------------------------------------------------------------------------------
 using namespace std;
 // -------------------------------------------------------------------------------------------------
@@ -16,7 +17,8 @@ namespace FileSystem {
 string getWorkingPath()
 {
    char cCurrentPath[FILENAME_MAX];
-   getcwd(cCurrentPath, sizeof(cCurrentPath));
+   if(getcwd(cCurrentPath, sizeof(cCurrentPath)) == nullptr)
+      throw "can not get working directory";
    return string(cCurrentPath) + "/";
 }
 // -------------------------------------------------------------------------------------------------

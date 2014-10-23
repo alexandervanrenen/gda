@@ -1,5 +1,5 @@
 #include "gda/script/ScriptLanguage.hpp"
-#include "gda/utility.hpp"
+#include "gda/Utility.hpp"
 #include "gda/script/Expression.hpp"
 #include <sstream>
 #include <ctype.h>

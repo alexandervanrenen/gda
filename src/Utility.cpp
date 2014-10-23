@@ -4,7 +4,7 @@
 //
 // Purpose - General helper functions.
 // -------------------------------------------------------------------------------------------------
-#include "gda/utility.hpp"
+#include "gda/Utility.hpp"
 #include <unistd.h>
 #include <cstdlib>
 #include <fstream>
