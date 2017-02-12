@@ -12,8 +12,8 @@ GTEST_INCLUDE := libs/gtest/include
 GTEST_LIB := libs/gtest/libgtest.a
 TARGET_DIR := bin
 
-CF := -g0 -O2 -std=c++11 -Werror -Wextra -Wall -funroll-all-loops -ffast-math -Iinclude $(addprefix -I,$(GTEST_INCLUDE))
-LF := -g0 -O2 -Werror -Wextra -Wall -funroll-all-loops -ffast-math
+CF := -g0 -O2 -std=c++11 -Werror -Wextra -Wall -ffast-math -Iinclude $(addprefix -I,$(GTEST_INCLUDE))
+LF := -g0 -O2 -Werror -Wextra -Wall -ffast-math
 
 CCCACHE_USE?=
 CXX?= g++

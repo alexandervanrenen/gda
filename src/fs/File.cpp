@@ -89,7 +89,7 @@ string File::loadFileToString() const throw(InvalidFileSystemRequest)
    in.read(&data[0], length);
    if (!in.good() || !in.is_open())
       throw InvalidFileSystemRequest("Can not read '" + path + "'");
-   return move(data);
+   return data;
 }
 // -------------------------------------------------------------------------------------------------
 vector<char> File::loadFileToVector() const throw(InvalidFileSystemRequest)
