@@ -59,19 +59,18 @@ $(TARGET_DIR)/%.o: %.cpp
 libs/gtest:
 	$(BUILD_DIR)
 	cd libs/ ;\
-	wget -O gtest-1.7.0.zip https://googletest.googlecode.com/files/gtest-1.7.0.zip ;\
-	unzip -q gtest-1.7.0.zip ;\
-	cd gtest-1.7.0 ;\
+	rm googletest -rf ;\
+	rm gtest -rf ;\
+	git clone https://github.com/google/googletest.git;\
+	cd googletest/googletest;\
 	mkdir -p build ;\
 	cd build ;\
 	cmake -G"Unix Makefiles" .. ;\
-	make ;\
-	ar -r libgtest.a libgtest_main.a
+	make
 	mkdir -p libs/gtest/include/gtest
-	mv libs/gtest-1.7.0/include/gtest/* libs/gtest/include/gtest
-	mv libs/gtest-1.7.0/build/libgtest.a libs/gtest/
-	rm libs/gtest-1.7.0.zip
-	rm -rf libs/gtest-1.7.0
+	mv libs/googletest/googletest/include/gtest/* libs/gtest/include/gtest
+	mv libs/googletest/googletest/build/libgtest.a libs/gtest/
+	rm -rf libs/googletest
 ## -------------------------------------------------------------------------------------------------
 ## Clean up the hole mess
 clean:

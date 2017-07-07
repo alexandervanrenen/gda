@@ -30,7 +30,7 @@ Folder::Folder(const string& in_path)
       DIR* directory = opendir(path.c_str());
       dirent* entry = readdir(directory);
       while (entry) {
-         if (entry->d_type == 8)
+         if (entry->d_type != DT_DIR)
             files.push_back(File(entry->d_name, *this));
          else
             subDirectories.push_back(entry->d_name);

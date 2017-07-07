@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <vector>
 #include <iostream>
+#include <limits>
 // -------------------------------------------------------------------------------------------------
 namespace gda {
 // -------------------------------------------------------------------------------------------------
@@ -36,14 +37,17 @@ std::string to_string(const Number& num)
       throw NoNumber();
    return stream.str();
 }
+
 /// string --> number
 template<class Number>
 Number to_number(const std::string& str)
 {
-   Number num;
+   int64_t num;
    std::istringstream stream(str);
    stream >> num;
    if (!stream.good() && !stream.eof())
+      throw NoNumber();
+   if(num < std::numeric_limits<Number>::min() || std::numeric_limits<Number>::max() < num)
       throw NoNumber();
    return num;
 }
