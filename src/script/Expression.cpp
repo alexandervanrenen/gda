@@ -1,6 +1,5 @@
 #include "gda/script/Expression.hpp"
 #include "gda/Utility.hpp"
-#include "gda/Conversion.hpp"
 #include "gda/String.hpp"
 #include "gda/script/Environment.hpp"
 #include <iostream>
@@ -791,9 +790,9 @@ unique_ptr<Value> StringValue::computeCast(const Environment& /*env*/, VariableT
 {
    switch (resultType) {
       case VariableType::TInteger:
-         return gda::make_unique<IntegerValue>(gda::to_number<int32_t>(this->result));
+         return gda::make_unique<IntegerValue>(stoi(this->result));
       case VariableType::TFloat:
-         return gda::make_unique<FloatValue>(gda::to_number<float>(this->result));
+         return gda::make_unique<FloatValue>(stof(this->result));
       case VariableType::TBool:
          return gda::make_unique<BoolValue>(this->result == kTrue || this->result == "0");
       case VariableType::TString:
