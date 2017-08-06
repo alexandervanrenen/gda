@@ -3,7 +3,6 @@
 // Copyright (c) 2014 Alexander van Renen. All rights reserved.
 //
 // Purpose - Creates random numbers.
-// Contributions - Thomas Neumann
 // -------------------------------------------------------------------------------------------------
 #pragma once
 // -------------------------------------------------------------------------------------------------

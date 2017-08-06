@@ -4,29 +4,37 @@
 //
 // Purpose - Creates random numbers.
 // -------------------------------------------------------------------------------------------------
-#include "gda/FastRandom.hpp"
-#include <limits>
+#pragma once
+// -------------------------------------------------------------------------------------------------
+#include <functional>
+#include <string>
+#include <vector>
+#include <regex>
 // -------------------------------------------------------------------------------------------------
 namespace gda {
 // -------------------------------------------------------------------------------------------------
-using namespace std;
+namespace cli {
 // -------------------------------------------------------------------------------------------------
-FastRandom::FastRandom(uint64_t seed)
-: seed(seed)
-{
-}
+class Command {
+   std::string pattern;
+   std::regex pattern_re;
+   std::function<bool(const std::vector<std::string> &args)> action;
+
+   std::vector<std::string> getArguments(const std::string &input);
+
+   friend class CommandLineInterface;
+
+public:
+   Command(const std::string &trigger, std::function<bool(const std::vector<std::string> &args)> action);
+   Command(const std::regex &trigger, std::function<bool(const std::vector<std::string> &args)> action);
+
+   bool matches(const std::string &input) const;
+
+   bool process(const std::string &input);
+   const std::string &getPattern() const;
+};
 // -------------------------------------------------------------------------------------------------
-uint64_t FastRandom::rand()
-{
-   seed ^= (seed << 13);
-   seed ^= (seed >> 7);
-   return (seed ^= (seed << 17));
-}
-// -------------------------------------------------------------------------------------------------
-float FastRandom::randScaleFactor()
-{
-   return static_cast<float>(rand()) / numeric_limits<uint64_t>::max();
-}
+} // End of namespace cli
 // -------------------------------------------------------------------------------------------------
 } // End of namespace gda
 // -------------------------------------------------------------------------------------------------
