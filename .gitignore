@@ -2,8 +2,8 @@ libgda.a
 *.o
 tester
 .DS_Store
-.idea
+.idea/*
 Utility.xcodeproj
 bin
 gtest
-
+cmake-build-debug
