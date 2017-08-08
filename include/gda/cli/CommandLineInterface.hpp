@@ -2,7 +2,7 @@
 // This file is part of the gda cpp utility library.
 // Copyright (c) 2017 Alexander van Renen. All rights reserved.
 //
-// Purpose - Creates random numbers.
+// Purpose - Helper for creating interactive user interfaces for the shell.
 // -------------------------------------------------------------------------------------------------
 #pragma once
 // -------------------------------------------------------------------------------------------------
