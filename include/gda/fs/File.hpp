@@ -27,17 +27,18 @@ public:
    const std::string getBaseNameNoEnding() const;
 
    // File attributes
-   uint32_t getFileLength() const throw(InvalidFileSystemRequest);
+   uint32_t getFileLength() const;
    bool exists() const;
 
    /// Loading
-   std::string loadFileToString() const throw(InvalidFileSystemRequest);
-   std::vector<char> loadFileToVector() const throw(InvalidFileSystemRequest);
+   std::string loadFileToString() const;
+   std::vector<char> loadFileToVector() const;
 
    /// Writing
-   void writeMemoryToFile(const MemoryRef& mem) const throw(InvalidFileSystemRequest);
-   void writeStringToFile(const std::string& mem) const throw(InvalidFileSystemRequest);
-   void writeVectorToFile(const std::vector<char>& mem) const throw(InvalidFileSystemRequest);
+   void writeMemoryToFile(const MemoryRef& mem) const;
+   void writeStringToFile(const std::string& mem) const;
+   void writeVectorToFile(const std::vector<char>& mem) const;
+   void writeMemoryToFile(const char *ptr, uint32_t len) const;
 
 private:
    std::string path;

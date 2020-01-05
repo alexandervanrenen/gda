@@ -68,7 +68,7 @@ bool File::exists() const
    return file.is_open() && file.good();
 }
 // -------------------------------------------------------------------------------------------------
-uint32_t File::getFileLength() const throw(InvalidFileSystemRequest)
+uint32_t File::getFileLength() const
 {
    int fileFD = open(path.c_str(), O_RDWR);
    if (fcntl(fileFD, F_GETFL) == -1)
@@ -81,7 +81,7 @@ uint32_t File::getFileLength() const throw(InvalidFileSystemRequest)
    return static_cast<uint32_t>(st.st_size);
 }
 // -------------------------------------------------------------------------------------------------
-string File::loadFileToString() const throw(InvalidFileSystemRequest)
+string File::loadFileToString() const
 {
    uint32_t length = getFileLength();
    string data(length, 'a');
@@ -92,7 +92,7 @@ string File::loadFileToString() const throw(InvalidFileSystemRequest)
    return data;
 }
 // -------------------------------------------------------------------------------------------------
-vector<char> File::loadFileToVector() const throw(InvalidFileSystemRequest)
+vector<char> File::loadFileToVector() const
 {
    uint32_t length = getFileLength();
    vector<char> data(length);
@@ -103,7 +103,7 @@ vector<char> File::loadFileToVector() const throw(InvalidFileSystemRequest)
    return data;
 }
 // -------------------------------------------------------------------------------------------------
-void File::writeMemoryToFile(const MemoryRef& mem) const throw(InvalidFileSystemRequest)
+void File::writeMemoryToFile(const MemoryRef& mem) const
 {
    if (mem.size() > numeric_limits<uint32_t>::max())
       throw InvalidFileSystemRequest("Memory to big, can not write to '" + path + "'");
@@ -113,7 +113,7 @@ void File::writeMemoryToFile(const MemoryRef& mem) const throw(InvalidFileSystem
    out.write(mem.data(), static_cast<uint32_t>(mem.size()));
 }
 // -------------------------------------------------------------------------------------------------
-void File::writeStringToFile(const string& mem) const throw(InvalidFileSystemRequest)
+void File::writeStringToFile(const string& mem) const
 {
    if (mem.size() > numeric_limits<uint32_t>::max())
       throw InvalidFileSystemRequest("Memory to big, can not write to '" + path + "'");
@@ -123,7 +123,7 @@ void File::writeStringToFile(const string& mem) const throw(InvalidFileSystemReq
    out.write(mem.data(), static_cast<uint32_t>(mem.size()));
 }
 // -------------------------------------------------------------------------------------------------
-void File::writeVectorToFile(const vector<char>& mem) const throw(InvalidFileSystemRequest)
+void File::writeVectorToFile(const vector<char>& mem) const
 {
    if (mem.size() > numeric_limits<uint32_t>::max())
       throw InvalidFileSystemRequest("Memory to big, can not write to '" + path + "'");
@@ -131,6 +131,14 @@ void File::writeVectorToFile(const vector<char>& mem) const throw(InvalidFileSys
    if (!out.good() || !out.is_open())
       throw InvalidFileSystemRequest("Can not write to '" + path + "'");
    out.write(mem.data(), static_cast<uint32_t>(mem.size()));
+}
+// -------------------------------------------------------------------------------------------------
+void File::writeMemoryToFile(const char *ptr, uint32_t len) const
+{
+   ofstream out(path);
+   if (!out.good() || !out.is_open())
+      throw InvalidFileSystemRequest("Can not write to '" + path + "'");
+   out.write(ptr, len);
 }
 // -------------------------------------------------------------------------------------------------
 } // End of namespace gda
