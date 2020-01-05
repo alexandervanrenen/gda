@@ -25,6 +25,8 @@ class Value;
 // -------------------------------------------------------------------------------------------------
 class Expression {
 public:
+   virtual ~Expression() = default;
+
    static std::unique_ptr<Expression> parse(const std::string& input);
    virtual void print() const = 0;
 
